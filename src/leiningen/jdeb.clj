@@ -100,8 +100,10 @@
     (.setDeb dm (file pkg-name))
     (if depends
       (.setDepends dm depends))
-    (.setDescription dm description)
-    (.setHomepage dm homepage)
-    (.setPackage dm package)
-    (.setSection dm section)
-    (.makeDeb dm)))
+    (doto dm
+      (.setDescription description)
+      (.setHomepage homepage)
+      (.setPackage package)
+      (.setSection section)
+      (.validate)
+      (.makeDeb))))
