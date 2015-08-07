@@ -1,6 +1,6 @@
 # lein-jdeb
 
-A Leiningen plugin to create debian package from your project's uberjar.
+A Leiningen plugin to create debian package as specified in your `project.clj`.
 Uses [jdeb](https://github.com/tcurdt/jdeb) to build the debian packages.
 
 ##  Leiningen
