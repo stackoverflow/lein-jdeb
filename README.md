@@ -63,9 +63,9 @@ Other settings that are available and their defaults
 
 ## Future Work
 
-- Fix :directory type
+- Fix `:directory` type
 - Support more types
-- Add wildcards so you can do things like `:src "${build.directory}/${build.finalName}.jar"
+- Add wildcards so you can do things like `:src "${build.directory}/${build.finalName}.jar"`
 
 ## License
 
