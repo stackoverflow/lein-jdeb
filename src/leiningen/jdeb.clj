@@ -35,7 +35,7 @@
 (defn deb-pkg-name
   "Build debian package name"
   [p v]
-  (str p "_" v ".deb"))
+  (str p "-" v ".deb"))
 
 (defmulti mapper :type)
 
@@ -87,7 +87,7 @@
         section (:deb-section conf "java")
         depends (:deb-depends conf)
         priority (:deb-priority conf "optional")
-        pkg-name (deb-pkg-name package version)
+        pkg-name (.getPath (io/file "target" (deb-pkg-name package version)))
         [producers confs] (process-data-set (:data-set conf))
         dm (DebMaker. console producers confs)]
     ;; If user specified control dir use that, else create control in temp
