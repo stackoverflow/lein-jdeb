@@ -37,6 +37,12 @@
   [p v]
   (str p "-" v ".deb"))
 
+(defn string-array [coll]
+  (into-array String coll))
+
+(defn mapper-array [coll]
+  (into-array Mapper coll))
+
 (defmulti mapper :type)
 
 (defmethod mapper :perm [m]
@@ -51,21 +57,21 @@
 
 (defmethod process-data :file [data]
   (DataProducerFile. (io/file (:src data)) (:dst data)
-                     (into-array String (:includes data))
-                     (into-array String (:excludes data))
-                     (into-array Mapper [(mapper (:mapper data))])))
+                     (string-array (:includes data))
+                     (string-array (:excludes data))
+                     (mapper-array [(mapper (:mapper data))])))
 
 (defmethod process-data :directory [data]
   (DataProducerDirectory. (io/file (:src data))
-                          (into-array String (:includes data))
-                          (into-array String (:excludes data))
-                          (into-array Mapper [(mapper (:mapper data))])))
+                          (string-array (or (:includes data) ["**"]))
+                          (string-array (:excludes data))
+                          (mapper-array [(mapper (:mapper data))])))
 
 (defmethod process-data :template [data]
-  (DataProducerPathTemplate. (into-array String (:paths data))
-                             (into-array String (:includes data))
-                             (into-array String (:excludes data))
-                             (into-array Mapper [(mapper (:mapper data))])))
+  (DataProducerPathTemplate. (string-array (:paths data))
+                             (string-array (:includes data))
+                             (string-array (:excludes data))
+                             (mapper-array [(mapper (:mapper data))])))
 
 (defn jdeb
   "Create debian package from project.clj configuration"

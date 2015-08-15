@@ -49,8 +49,6 @@ Add a `:deb` entry to your `project.clj`. It should be similar to jdeb maven plu
                                 :user "myuser"
                                 :group "mygroup"}}]}
 
-Note that `:type :directory` is not yet working.
-
 Invoke via:
 
     $ lein jdeb
@@ -63,7 +61,6 @@ Other settings that are available and their defaults
 
 ## Future Work
 
-- Fix `:directory` type
 - Support more types
 - Add wildcards so you can do things like `:src "${build.directory}/${build.finalName}.jar"`
 
