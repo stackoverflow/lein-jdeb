@@ -49,7 +49,7 @@
 (defmulti mapper :type)
 
 (defmethod mapper :perm [m]
-  (PermMapper. (:uid m -1) (:gid m -1) (:user m) (:group m) (:filemode m "") (:dirmode m "") (:strip m 0) (:prefix m)))
+  (PermMapper. (:uid m -1) (:gid m -1) (:user m) (:group m) (:filemode m "644") (:dirmode m "755") (:strip m 0) (:prefix m)))
 
 (defmethod mapper :ls [m]
   (LsMapper. (io/input-stream (:src m))))

@@ -49,6 +49,9 @@ Add a `:deb` entry to your `project.clj`. It should be similar to jdeb maven plu
                                 :user "myuser"
                                 :group "mygroup"}}]}
 
+The control directory needs to have a file called `control` inside.
+This file can have placeholders using `[[var-name]]` where var-name is a key defined in your project.clj
+
 Invoke via:
 
     $ lein jdeb
@@ -62,7 +65,6 @@ Other settings that are available and their defaults
 ## Future Work
 
 - Support more types
-- Add wildcards so you can do things like `:src "${build.directory}/${build.finalName}.jar"`
 
 ## License
 
