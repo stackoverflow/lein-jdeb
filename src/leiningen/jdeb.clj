@@ -1,10 +1,12 @@
 (ns leiningen.jdeb
   (:require [leiningen.core.main :as lm]
             [clojure.java.io :as io]
+            [clojure.walk :refer [stringify-keys]]
             [me.raynes.fs :refer [temp-dir file]])
   (:import [org.vafer.jdeb DebMaker Console]
-           [org.vafer.jdeb.mapping Mapper PermMapper NullMapper]
-           [org.vafer.jdeb.producers DataProducerFile DataProducerDirectory DataProducerPathTemplate])
+           [org.vafer.jdeb.mapping Mapper PermMapper NullMapper LsMapper]
+           [org.vafer.jdeb.producers DataProducerFile DataProducerDirectory DataProducerPathTemplate]
+           [org.vafer.jdeb.utils MapVariableResolver])
   (:gen-class))
 
 (def console
@@ -43,16 +45,19 @@
 (defn mapper-array [coll]
   (into-array Mapper coll))
 
+;; Mappers
 (defmulti mapper :type)
 
 (defmethod mapper :perm [m]
   (PermMapper. (:uid m -1) (:gid m -1) (:user m) (:group m) (:filemode m "") (:dirmode m "") (:strip m 0) (:prefix m)))
 
-(defmethod mapper :null [_]
+(defmethod mapper :ls [m]
+  (LsMapper. (io/input-stream (:src m))))
+
+(defmethod mapper :default [_]
   NullMapper/INSTANCE)
 
-(defmethod mapper :default [_] nil)
-
+;; Data Producers
 (defmulti process-data :type)
 
 (defmethod process-data :file [data]
@@ -90,7 +95,10 @@
         pkg-name (.getPath (io/file "target" (deb-pkg-name package version)))
         producers (mapv process-data (:data-set conf))
         confs (mapv process-data (filter :conffile (:data-set conf)))
-        dm (DebMaker. console producers confs)]
+        dm (doto (DebMaker. console producers confs)
+             (.setOpenReplaceToken "[[")
+             (.setCloseReplaceToken "]]")
+             (.setResolver (MapVariableResolver. (stringify-keys project))))]
     ;; If user specified control dir use that, else create control in temp
     ;; directory with minimum required control fields
     (if control-dir
