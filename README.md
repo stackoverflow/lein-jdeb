@@ -11,11 +11,11 @@ Uses [jdeb](https://github.com/tcurdt/jdeb) to build the debian packages.
 
 ###With Leiningen 2
 
-Add `[stackoverflow/lein-jdeb "1.0.2"]` to your project's `:plugins`.
+Add `[stackoverflow/lein-jdeb "1.0.3"]` to your project's `:plugins`.
 
 ###With Leiningen 1
 
-Add `[stackoverflow/lein-jdeb "1.0.2"]` to your project's `:dev-dependencies`.
+Add `[stackoverflow/lein-jdeb "1.0.3"]` to your project's `:dev-dependencies`.
 
 ##  Usage
 
