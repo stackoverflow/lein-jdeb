@@ -37,7 +37,7 @@
 (defn deb-pkg-name
   "Build debian package name"
   [p v]
-  (str p "-" v ".deb"))
+  (str p "_" v ".deb"))
 
 (defn string-array [coll]
   (into-array String coll))
