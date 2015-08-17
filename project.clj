@@ -1,4 +1,4 @@
-(defproject stackoverflow/lein-jdeb "1.0.3"
+(defproject stackoverflow/lein-jdeb "1.0.4"
   :description "Create debian packages from leiningen project (based on jdeb)"
   :url "https://github.com/stackoverflow/lein-jdeb"
   :license {:name "Eclipse Public License"

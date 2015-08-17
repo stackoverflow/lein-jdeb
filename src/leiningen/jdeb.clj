@@ -36,8 +36,8 @@
 
 (defn deb-pkg-name
   "Build debian package name"
-  [p v]
-  (str p "_" v ".deb"))
+  [p v a]
+  (str p "_" v "_" a ".deb"))
 
 (defn string-array [coll]
   (into-array String coll))
@@ -92,7 +92,7 @@
         section (:deb-section conf "java")
         depends (:deb-depends conf)
         priority (:deb-priority conf "optional")
-        pkg-name (.getPath (io/file "target" (deb-pkg-name package version)))
+        pkg-name (.getPath (io/file "target" (deb-pkg-name package version architecture)))
         producers (mapv process-data (:data-set conf))
         confs (mapv process-data (filter :conffile (:data-set conf)))
         dm (doto (DebMaker. console producers confs)
